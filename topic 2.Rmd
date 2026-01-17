@@ -1,0 +1,115 @@
+---
+title: "topic 2"
+author: "U.S.Girase"
+date: "22/07/2025"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Q2
+a)data frame of employee data
+```{r}
+employee_data <- data.frame(Manager=seq(1,5),
+                            date=c("10/24/08","10/28/08","10/1/08","10/12/08","5/1/09"),
+                            country =c("US","US","UK","UK","UK"),
+                            gender =c("M","F","F","M","F"),
+                            age=c(32,45,25,39,99),
+                            q1=c(5,3,3,3,2),
+                            q2=c(4,5,5,3,2),
+                            q3=c(5,2,5,4,1),
+                            q4=c(5,5,5,NA,2),q5=c(5,5,2,NA,1))
+employee_data
+```
+b)create two summary variable
+```{r}
+library(dplyr)
+employee_data <- employee_data %>%
+  mutate(total_score=q1+q2+q3+q4+q5,mean_score=total_score/5);employee_data
+```
+c)recode
+```{r}
+employee_data$gender <- 
+  recode(employee_data$gender,"M"="Male","F"="Female");employee_data
+```
+d)rename
+```{r}
+employee_data <- employee_data %>%
+  rename("ID"="Manager","sex"="gender");employee_data
+```
+e)sorting data variable
+```{r}
+employee_data <- employee_data%>%
+  arrange(sex,total_score);employee_data
+```
+f)create a new data frame 
+```{r}
+employee_data1 <- employee_data %>%
+  select(ID,mean_score);employee_data1
+```
+g) filter the data
+```{r}
+employee_data2 <- employee_data%>%filter(sex=="Male",total_score>10);employee_data2
+```
+#Q2
+```{r}
+library(dplyr)
+library("MASS")
+datasets::mtcars
+```
+a)
+```{r}
+a <- mtcars%>%
+  filter(hp>100) %>% arrange(desc(mpg));a
+```
+b)
+```{r}
+b <- mtcars%>%
+  dplyr::select(mpg,hp,qsec);b
+  
+```
+c)
+```{r}
+c <- mtcars%>%
+  mutate(DPC=disp/cyl);c
+```
+d)
+```{r}
+d <- mtcars%>%
+  summarise(mean(mpg),sd(mpg));d
+```
+e)
+
+```{r}
+e <- mtcars%>%
+  group_by(cyl)%>% summarise(mean(mpg),mean(hp));e
+```
+f)
+```{r}
+f <- mtcars %>% 
+ filter(mpg>20) %>% arrange(desc(hp)) %>% 
+  dplyr::select(mpg,hp,qsec);f
+```
+g
+```{r}
+g <- mtcars%>%
+  mutate(mpg_category=if_else(mpg>25,"High","Low"));g
+```
+h
+```{r}
+h <- mtcars%>%
+  mutate(scale(mpg));h
+```
+i
+```{r}
+i <- mtcars%>%
+  rename(Milespergallon =mpg,Horsepower=hp,QuarterMileTime=qsec);i
+```
+j
+```{r}
+j <- mtcars%>%
+  mutate(am=if_else(am==0,"Automatic","manual"));j
+```
+
+
